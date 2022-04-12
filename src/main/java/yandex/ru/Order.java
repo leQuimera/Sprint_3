@@ -1,3 +1,7 @@
+package yandex.ru;
+
+import java.util.List;
+
 public class Order {
     private String firstName;
     private String lastName;
@@ -9,16 +13,7 @@ public class Order {
     private String comment;
     private String[] color;
 
-    public Order(String firstName, String lastName, String address, String metroStation, String phone, int rentTime, String deliveryDate, String comment, String[] color) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.metroStation = metroStation;
-        this.phone = phone;
-        this.rentTime = rentTime;
-        this.deliveryDate = deliveryDate;
-        this.comment = comment;
-        this.color = color;
+    public Order() {
     }
 
     public Order(String firstName, String lastName, String address, String metroStation, String phone, int rentTime, String deliveryDate, String comment) {
@@ -32,7 +27,16 @@ public class Order {
         this.comment = comment;
     }
 
-    public Order() {
+    public Order(String firstName, String lastName, String address, String metroStation, String phone, int rentTime, String deliveryDate, String comment, String[] color) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.metroStation = metroStation;
+        this.phone = phone;
+        this.rentTime = rentTime;
+        this.deliveryDate = deliveryDate;
+        this.comment = comment;
+        this.color = color;
     }
 
     public String getFirstName() {
