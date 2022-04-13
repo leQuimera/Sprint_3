@@ -2,8 +2,6 @@ package yandex.ru;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.Objects;
-
 public class Courier {
     private String login;
     private String password;
@@ -50,26 +48,26 @@ public class Courier {
         return this;
     }
 
-    public static Courier getRandomCourier() {
+    public static Courier createRandomCourier() {
         return new Courier()
                 .setLogin(RandomStringUtils.randomAlphabetic(10))
                 .setPassword(RandomStringUtils.randomAlphabetic(10))
                 .setFirstName(RandomStringUtils.randomAlphabetic(10));
     }
 
-    public static Courier getCourierWithoutFirstName(){
+    public static Courier createCourierWithoutFirstName(){
         return new Courier()
                 .setLogin(RandomStringUtils.randomAlphabetic(10))
                 .setPassword(RandomStringUtils.randomAlphabetic(10));
     }
 
-    public static Courier getCourierWithoutLogin() {
+    public static Courier createCourierWithoutLogin() {
         return new Courier()
                 .setPassword(RandomStringUtils.randomAlphabetic(10))
                 .setFirstName(RandomStringUtils.randomAlphabetic(10));
     }
 
-    public static Courier getCourierWithoutPassword() {
+    public static Courier createCourierWithoutPassword() {
         return new Courier()
                 .setLogin(RandomStringUtils.randomAlphabetic(10))
                 .setFirstName(RandomStringUtils.randomAlphabetic(10));
@@ -77,6 +75,16 @@ public class Courier {
 
     public Courier returnCourierLoginAndPassword() {
         return new Courier(this.getLogin(), this.getPassword());
+    }
+
+    public static Courier returnCourierWithOnlyLogin(Courier courier){
+        return new Courier()
+                .setLogin(courier.getLogin());
+    }
+
+    public static Courier returnCourierWithOnlyPassword(Courier courier){
+        return new Courier()
+                .setPassword(courier.getPassword());
     }
 
     @Override

@@ -1,7 +1,5 @@
 package yandex.ru;
 
-import java.util.List;
-
 public class Order {
     private String firstName;
     private String lastName;

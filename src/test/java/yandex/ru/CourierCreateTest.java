@@ -16,20 +16,19 @@ public class CourierCreateTest {
 
     @Before
     public void setUp() {
-        courier = Courier.getRandomCourier();
+        courier = Courier.createRandomCourier();
         courierClient = new CourierClient();
     }
 
     @After
     public void tearDown() {
-        ValidatableResponse responseLogin = courierClient.loginCourier(courier.returnCourierLoginAndPassword());
-        int courierId = responseLogin.extract().path("id");
+        int courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         courierClient.deleteCourier(courierId);
     }
 
     @Test
     @DisplayName("A new courier can be created if all required parameters are present")
-    public void testCourierCanBeCreated() {
+    public void courierCanBeCreatedTest() {
         ValidatableResponse response = courierClient.createCourier(courier);
         int statusCode = response.extract().statusCode();
         boolean isCourierCreated = response.extract().path("ok");
@@ -39,9 +38,10 @@ public class CourierCreateTest {
     }
 
     @Test
-    public void testDuplicateCourierCannotBeCreated() {
+    @DisplayName("Trying to create a courier again with an existing login")
+    public void duplicateCourierCannotBeCreatedTest() {
         courierClient.createCourier(courier);
-        Courier courierDuplicate = Courier.getCourierWithoutLogin().setLogin(courier.getLogin());
+        Courier courierDuplicate = Courier.createCourierWithoutLogin().setLogin(courier.getLogin());
         ValidatableResponse response = courierClient.createCourier(courierDuplicate);
         int statusCode = response.extract().statusCode();
         String errorMessage = response.extract().path("message");
