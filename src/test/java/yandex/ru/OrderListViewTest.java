@@ -20,7 +20,7 @@ public class OrderListViewTest {
     }
 
     @Test
-    public void checkListOfOrderTest(){
+    public void viewListOfOrderTest(){
         ValidatableResponse response = orderClient.getOrderList();
         int statusCode = response.extract().statusCode();
         List<Map<String, Object>> orders = response.extract().jsonPath().getList("orders");
