@@ -26,6 +26,7 @@ public class CourierLoginValidationTest {
     @Before
     public void setUp() {
         courierClient = new CourierClient();
+        courierClient.createCourier(courier);
     }
 
     @After
@@ -50,14 +51,11 @@ public class CourierLoginValidationTest {
 
     @Test
     public void validationOfCourierCreationTest(){
-        courierClient.createCourier(courier);
-        System.out.println(courierLogin.toString());
         ValidatableResponse errorResponse = new CourierClient().loginCourier(courierLogin);
-        System.out.println(errorResponse.toString());
         int statusCode = errorResponse.extract().statusCode();
-        String errorMessage = errorResponse.extract().path("message");
-
         assertEquals("Status code is incorrect", expectedStatus, statusCode);
+
+        String errorMessage = errorResponse.extract().path("message");
         assertEquals("Message is incorrect", expectedErrorMessage, errorMessage);
     }
 }

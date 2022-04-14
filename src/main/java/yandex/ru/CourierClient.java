@@ -29,7 +29,6 @@ public class CourierClient extends RestAssuredClient{
     public ValidatableResponse loginCourier(Courier courier) {
         return given()
                 .spec(getBaseSpecification())
-                .contentType("application/json")
                 .body(courier)
                 .when()
                 .post(BaseEndpoints.COURIER_LOGIN)
