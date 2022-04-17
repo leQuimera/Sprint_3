@@ -38,7 +38,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Success acceptation of order")
-    public void acceptOrderByCourierTest() {
+    public void acceptOrderByCourier() {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
@@ -52,7 +52,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Re-acceptance of the order by the courier")
-    public void reacceptanceOfOrderByCourierTest() {
+    public void reAcceptanceOfOrderByCourier() {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
@@ -68,7 +68,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Request with non-existent order ID")
-    public void acceptOrderWithUnexcitingOrderIdTest() {
+    public void acceptOrderWithUnexcitingOrderId() {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         orderId = RandomUtils.nextInt(10000000, 99999999);
         ValidatableResponse response = orderClient.acceptOrder(courierId, orderId);
@@ -81,7 +81,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Request with non-existent courier ID")
-    public void acceptOrderWithUnexcitingCourierIdTest() {
+    public void acceptOrderWithUnexcitingCourierId() {
         courierId = RandomUtils.nextInt(10000000, 99999999);
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
@@ -95,7 +95,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Request with missing courier ID")
-    public void acceptOrderWithoutCourierIdTest() {
+    public void acceptOrderWithoutCourierId() {
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
         ValidatableResponse response = orderClient.acceptOrderWithoutCourierId(orderId);
@@ -108,7 +108,7 @@ public class OrderAcceptTest {
 
     @Test
     @DisplayName("Request with missing order ID")
-    public void acceptOrderWithoutOrderIdTest() {
+    public void acceptOrderWithoutOrderId() {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         ValidatableResponse response = orderClient.acceptOrderWithoutOrderId(courierId);
         int statusCode = response.extract().statusCode();

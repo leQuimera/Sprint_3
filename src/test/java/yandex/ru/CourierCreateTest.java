@@ -11,6 +11,7 @@ import static org.apache.http.HttpStatus.SC_CONFLICT;
 import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
@@ -33,7 +34,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Successful creation of a courier")
     @Description("A new courier can be created if all required parameters are present (login, password, firstname)")
-    public void courierCanBeCreatedTest() {
+    public void courierCanBeCreated() {
         ValidatableResponse response = courierClient.createCourier(courier);
         int statusCode = response.extract().statusCode();
         boolean isCourierCreated = response.extract().path("ok");
@@ -45,7 +46,7 @@ public class CourierCreateTest {
     @Test
     @DisplayName("Recreation of a courier")
     @Description("Trying to create a courier again with an existing login")
-    public void duplicateCourierCannotBeCreatedTest() {
+    public void duplicateCourierCannotBeCreated() {
         courierClient.createCourier(courier);
         Courier courierDuplicate = Courier.createCourierWithoutLogin().setLogin(courier.getLogin());
         ValidatableResponse response = courierClient.createCourier(courierDuplicate);
@@ -53,6 +54,6 @@ public class CourierCreateTest {
         assertThat("Status code is incorrect", statusCode, equalTo(SC_CONFLICT));
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo("Этот логин уже используется"));
+        assertEquals("Message is incorrect", errorMessage, "Этот логин уже используется");
     }
 }

@@ -21,7 +21,7 @@ public class CourierCreateValidationTest {
     private String expectedErrorMessage;
     private int courierId;
     private CourierClient courierClient;
-    private static final String CURRENT_ERROR_MASSEGE = "Недостаточно данных для создания учетной записи";
+    private static final String CURRENT_ERROR_MESSAGE = "Недостаточно данных для создания учетной записи";
 
     @Before
     public void setUp() {
@@ -42,17 +42,17 @@ public class CourierCreateValidationTest {
     @Parameterized.Parameters
     public static Object[][] getTestData() {
         return new Object[][]{
-                {Courier.createCourierWithoutLogin(), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
-                {Courier.createCourierWithoutPassword(), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
+                {Courier.createCourierWithoutLogin(), SC_BAD_REQUEST, CURRENT_ERROR_MESSAGE},
+                {Courier.createCourierWithoutPassword(), SC_BAD_REQUEST, CURRENT_ERROR_MESSAGE},
                 {Courier.createCourierWithoutFirstName(), SC_CREATED, null},
-                {Courier.returnCourierWithOnlyFirstname(Courier.createRandomCourier()), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
+                {Courier.returnCourierWithOnlyFirstname(Courier.createRandomCourier()), SC_BAD_REQUEST, CURRENT_ERROR_MESSAGE},
         };
     }
 
     @Test
     @DisplayName("Trying to create a courier without one of the required fields")
     @Description("The courier authorization then check that authorization was successful")
-    public void validationOfCourierCreationTest(){
+    public void validationOfCourierCreation(){
         ValidatableResponse response = new CourierClient().createCourier(courier);
         int statusCode = response.extract().statusCode();
         String errorMessage = response.extract().path("message");

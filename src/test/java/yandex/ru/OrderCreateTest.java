@@ -48,12 +48,12 @@ public class OrderCreateTest {
             "2. Grey color of the scooter " +
             "3. Both colors of the scooter " +
             "4. Without colors of the scooter")
-    public void orderCanBeCreatedBasedOnColorTest() {
+    public void orderCanBeCreatedBasedOnColor() {
         ValidatableResponse response = orderClient.createOrder(order);
         int statusCode = response.extract().statusCode();
-        trackId = response.extract().path("track");
-
         assertEquals("Status code is incorrect", SC_CREATED, statusCode);
+
+        trackId = response.extract().path("track");
         assertThat("Track ID is incorrect", trackId, notNullValue());
     }
 }

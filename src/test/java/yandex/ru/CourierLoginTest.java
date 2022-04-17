@@ -30,7 +30,7 @@ public class CourierLoginTest {
     @Test
     @DisplayName("Courier authorization")
     @Description("Checking the response code status and id availability")
-    public void courierCanBeCreatedTest() {
+    public void courierCanBeLogging() {
         courierClient.createCourier(courier);
         ValidatableResponse response = courierClient.loginCourier(courier.returnCourierLoginAndPassword());
         int statusCode = response.extract().statusCode();

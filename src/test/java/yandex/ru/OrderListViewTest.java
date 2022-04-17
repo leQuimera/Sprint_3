@@ -22,12 +22,12 @@ public class OrderListViewTest {
 
     @Test
     @DisplayName("Getting a list of orders")
-    public void getListOfOrderTest(){
+    public void getListOfOrder(){
         ValidatableResponse response = orderClient.getOrderList();
         int statusCode = response.extract().statusCode();
-        List<Map<String, Object>> orders = response.extract().jsonPath().getList("orders");
-
         assertThat("Status code is incorrect", statusCode, equalTo(SC_OK));
+
+        List<Map<String, Object>> orders = response.extract().jsonPath().getList("orders");
         assertThat("List is empty", orders, notNullValue());
     }
 }

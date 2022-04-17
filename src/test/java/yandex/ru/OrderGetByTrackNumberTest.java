@@ -21,7 +21,7 @@ public class OrderGetByTrackNumberTest {
 
     @Test
     @DisplayName("Find order by track number")
-    public void canFindOrderByTrackTest() {
+    public void canFindOrderByTrack() {
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         ValidatableResponse response = orderClient.getOrderByTrack(orderTrack);
         int statusCode = response.extract().statusCode();
@@ -33,7 +33,7 @@ public class OrderGetByTrackNumberTest {
 
     @Test
     @DisplayName("Cannot find order without track number")
-    public void canNotFindOrderWithoutTrackTest() {
+    public void canNotFindOrderWithoutTrack() {
         ValidatableResponse response = orderClient.getOrderByTrack();
         int statusCode = response.extract().statusCode();
         assertThat("Status code is incorrect", statusCode, equalTo(SC_BAD_REQUEST));
@@ -44,7 +44,7 @@ public class OrderGetByTrackNumberTest {
 
     @Test
     @DisplayName("Cannot find order with wrong track number")
-    public void canNotFindOrderWithWrongTrackTest() {
+    public void canNotFindOrderWithWrongTrack() {
         int orderTrack = RandomUtils.nextInt(10000000, 99999999);
         ValidatableResponse response = orderClient.getOrderByTrack(orderTrack);
         int statusCode = response.extract().statusCode();

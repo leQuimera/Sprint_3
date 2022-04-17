@@ -57,7 +57,7 @@ public class CourierLoginValidationTest {
             "1. Login field " +
             "2. Password field " +
             "3. Authorize not created courier")
-    public void validationOfCourierCreationTest(){
+    public void validationOfCourierCreation(){
         ValidatableResponse errorResponse = new CourierClient().loginCourier(courierLogin);
         int statusCode = errorResponse.extract().statusCode();
         assertEquals("Status code is incorrect", expectedStatus, statusCode);
