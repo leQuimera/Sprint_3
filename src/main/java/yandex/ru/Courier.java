@@ -1,5 +1,6 @@
 package yandex.ru;
 
+import io.qameta.allure.Step;
 import org.apache.commons.lang3.RandomStringUtils;
 
 public class Courier {
@@ -48,6 +49,7 @@ public class Courier {
         return this;
     }
 
+    @Step("Create random courier")
     public static Courier createRandomCourier() {
         return new Courier()
                 .setLogin(RandomStringUtils.randomAlphabetic(10))
@@ -87,12 +89,8 @@ public class Courier {
                 .setPassword(courier.getPassword());
     }
 
-    @Override
-    public String toString() {
-        return "Courier{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                '}';
+    public static Courier returnCourierWithOnlyFirstname(Courier courier){
+        return new Courier()
+                .setPassword(courier.getFirstName());
     }
 }

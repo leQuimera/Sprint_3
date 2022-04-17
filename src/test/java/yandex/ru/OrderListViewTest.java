@@ -1,5 +1,6 @@
 package yandex.ru;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +21,13 @@ public class OrderListViewTest {
     }
 
     @Test
-    public void viewListOfOrderTest(){
+    @DisplayName("Getting a list of orders")
+    public void getListOfOrderTest(){
         ValidatableResponse response = orderClient.getOrderList();
         int statusCode = response.extract().statusCode();
         List<Map<String, Object>> orders = response.extract().jsonPath().getList("orders");
 
         assertThat("Status code is incorrect", statusCode, equalTo(SC_OK));
-        assertThat("List is empty",orders,notNullValue());
+        assertThat("List is empty", orders, notNullValue());
     }
 }

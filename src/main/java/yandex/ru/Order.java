@@ -123,7 +123,7 @@ public class Order {
         return this;
     }
 
-    public static Order createRandomOrderNoColors(String[] colors) {
+    public static Order createRandomOrderNoColors() {
         return new Order()
                 .setFirstName(RandomStringUtils.randomAlphabetic(5, 10))
                 .setLastName(RandomStringUtils.randomAlphabetic(5, 10))
@@ -132,7 +132,6 @@ public class Order {
                 .setPhone("+7" + RandomStringUtils.randomNumeric(9))
                 .setRentTime(Integer.parseInt(RandomStringUtils.randomNumeric(1)))
                 .setDeliveryDate(LocalDate.now().toString())
-                .setComment(RandomStringUtils.randomAlphabetic(10))
-                .setColors(colors);
+                .setComment(RandomStringUtils.randomAlphabetic(10));
     }
 }

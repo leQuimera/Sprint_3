@@ -1,5 +1,7 @@
 package yandex.ru;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -43,17 +45,17 @@ public class CourierCreateValidationTest {
                 {Courier.createCourierWithoutLogin(), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
                 {Courier.createCourierWithoutPassword(), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
                 {Courier.createCourierWithoutFirstName(), SC_CREATED, null},
+                {Courier.returnCourierWithOnlyFirstname(Courier.createRandomCourier()), SC_BAD_REQUEST, CURRENT_ERROR_MASSEGE},
         };
     }
 
     @Test
+    @DisplayName("Trying to create a courier without one of the required fields")
+    @Description("The courier authorization then check that authorization was successful")
     public void validationOfCourierCreationTest(){
         ValidatableResponse response = new CourierClient().createCourier(courier);
         int statusCode = response.extract().statusCode();
         String errorMessage = response.extract().path("message");
-        if(statusCode == 201){
-            courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
-        }
         assertEquals("Status code is incorrect", expectedStatus, statusCode);
         assertEquals("Message is incorrect", expectedErrorMessage, errorMessage);
     }

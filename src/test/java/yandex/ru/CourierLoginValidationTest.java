@@ -1,5 +1,7 @@
 package yandex.ru;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -50,6 +52,11 @@ public class CourierLoginValidationTest {
     }
 
     @Test
+    @DisplayName("Trying to authorize one courier without one of the required fields")
+    @Description("Authorization the courier with: " +
+            "1. Login field " +
+            "2. Password field " +
+            "3. Authorize not created courier")
     public void validationOfCourierCreationTest(){
         ValidatableResponse errorResponse = new CourierClient().loginCourier(courierLogin);
         int statusCode = errorResponse.extract().statusCode();
