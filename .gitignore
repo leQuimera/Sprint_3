@@ -9,4 +9,4 @@
 /.allure
 /.idea
 /allure-report
-!target/allure-results
+!/target/allure-results
