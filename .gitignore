@@ -5,8 +5,8 @@
        *.ipr
 
        ### Target ###
-       target/
-       .allure
 /target
 /.allure
 /.idea
+/allure-report
+!target/allure-results
