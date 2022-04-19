@@ -55,8 +55,9 @@ public class CourierCreateValidationTest {
     public void validationOfCourierCreation(){
         ValidatableResponse response = new CourierClient().createCourier(courier);
         int statusCode = response.extract().statusCode();
-        String errorMessage = response.extract().path("message");
         assertEquals("Status code is incorrect", expectedStatus, statusCode);
+
+        String errorMessage = response.extract().path("message");
         assertEquals("Message is incorrect", expectedErrorMessage, errorMessage);
     }
 

@@ -9,8 +9,6 @@ import org.junit.Test;
 
 import static org.apache.http.HttpStatus.SC_CONFLICT;
 import static org.apache.http.HttpStatus.SC_CREATED;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -40,7 +38,7 @@ public class CourierCreateTest {
         boolean isCourierCreated = response.extract().path("ok");
 
         assertTrue("Courier is not created", isCourierCreated);
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_CREATED));
+        assertEquals("Status code is incorrect", SC_CREATED, statusCode);
     }
 
     @Test
@@ -51,9 +49,9 @@ public class CourierCreateTest {
         Courier courierDuplicate = Courier.createCourierWithoutLogin().setLogin(courier.getLogin());
         ValidatableResponse response = courierClient.createCourier(courierDuplicate);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_CONFLICT));
+        assertEquals("Status code is incorrect", SC_CONFLICT, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertEquals("Message is incorrect", errorMessage, "Этот логин уже используется");
+        assertEquals("Message is incorrect", "Этот логин уже используется", errorMessage);
     }
 }

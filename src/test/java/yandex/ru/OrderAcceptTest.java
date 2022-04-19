@@ -8,8 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class OrderAcceptTest {
@@ -44,7 +43,7 @@ public class OrderAcceptTest {
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
         ValidatableResponse response = orderClient.acceptOrder(courierId, orderId);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_OK));
+        assertEquals("Status code is incorrect", SC_OK, statusCode);
 
         boolean isOrderAccepted = response.extract().path("ok");
         assertTrue("Order is accepted", isOrderAccepted);
@@ -59,10 +58,10 @@ public class OrderAcceptTest {
         ValidatableResponse response = orderClient.acceptOrder(courierId, orderId);
         ValidatableResponse duplicateResponse = orderClient.acceptOrder(courierId, orderId);
         int statusCode = duplicateResponse.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_CONFLICT));
+        assertEquals("Status code is incorrect", SC_CONFLICT, statusCode);
 
         String errorMessage = duplicateResponse.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo(ERROR_MESSAGE_ORDER_CURRENTLY_IN_WORK));
+        assertEquals("Message is incorrect", ERROR_MESSAGE_ORDER_CURRENTLY_IN_WORK, errorMessage);
     }
 
 
@@ -73,10 +72,10 @@ public class OrderAcceptTest {
         orderId = RandomUtils.nextInt(10000000, 99999999);
         ValidatableResponse response = orderClient.acceptOrder(courierId, orderId);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_NOT_FOUND));
+        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo(ERROR_MESSAGE_ORDER_DOES_NOT_EXIST));
+        assertEquals("Message is incorrect", ERROR_MESSAGE_ORDER_DOES_NOT_EXIST, errorMessage);
     }
 
     @Test
@@ -87,10 +86,10 @@ public class OrderAcceptTest {
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
         ValidatableResponse response = orderClient.acceptOrder(courierId, orderId);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_NOT_FOUND));
+        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo(ERROR_MESSAGE_COURIER_DOES_NOT_EXIST));
+        assertEquals("Message is incorrect", ERROR_MESSAGE_COURIER_DOES_NOT_EXIST, errorMessage);
     }
 
     @Test
@@ -100,10 +99,10 @@ public class OrderAcceptTest {
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
         ValidatableResponse response = orderClient.acceptOrderWithoutCourierId(orderId);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_NOT_FOUND));
+        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo(ERROR_MESSAGE_NOT_ENOUGH_DATA));
+        assertEquals("Message is incorrect", ERROR_MESSAGE_NOT_ENOUGH_DATA, errorMessage);
     }
 
     @Test
@@ -112,10 +111,10 @@ public class OrderAcceptTest {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         ValidatableResponse response = orderClient.acceptOrderWithoutOrderId(courierId);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_NOT_FOUND));
+        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo(ERROR_MESSAGE_NOT_ENOUGH_DATA));
+        assertEquals("Message is incorrect", ERROR_MESSAGE_NOT_ENOUGH_DATA, errorMessage);
     }
 
 

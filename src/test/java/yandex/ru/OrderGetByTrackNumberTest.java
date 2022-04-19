@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.apache.http.HttpStatus.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class OrderGetByTrackNumberTest {
@@ -25,7 +24,7 @@ public class OrderGetByTrackNumberTest {
         int orderTrack = orderClient.createOrder(Order.createRandomOrderNoColors()).extract().path("track");
         ValidatableResponse response = orderClient.getOrderByTrack(orderTrack);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_OK));
+        assertEquals("Status code is incorrect", SC_OK, statusCode);
 
         boolean isEmptyBody = response.extract().contentType().isEmpty();
         assertFalse("Error", isEmptyBody);
@@ -36,10 +35,10 @@ public class OrderGetByTrackNumberTest {
     public void canNotFindOrderWithoutTrack() {
         ValidatableResponse response = orderClient.getOrderByTrack();
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_BAD_REQUEST));
+        assertEquals("Status code is incorrect", SC_BAD_REQUEST, statusCode);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo("Недостаточно данных для поиска"));
+        assertEquals("Message is incorrect", "Недостаточно данных для поиска", errorMessage);
     }
 
     @Test
@@ -48,10 +47,10 @@ public class OrderGetByTrackNumberTest {
         int orderTrack = RandomUtils.nextInt(10000000, 99999999);
         ValidatableResponse response = orderClient.getOrderByTrack(orderTrack);
         int statusCode = response.extract().statusCode();
-        assertThat("Status code is incorrect", statusCode, equalTo(SC_NOT_FOUND));
+        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode, SC_NOT_FOUND);
 
         String errorMessage = response.extract().path("message");
-        assertThat("Message is incorrect", errorMessage, equalTo("Заказ не найден"));
+        assertEquals("Message is incorrect", "Заказ не найден", errorMessage);
     }
 
 }
