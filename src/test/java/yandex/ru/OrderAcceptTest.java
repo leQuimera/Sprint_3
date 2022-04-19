@@ -99,7 +99,7 @@ public class OrderAcceptTest {
         orderId = orderClient.getOrderByTrack(orderTrack).extract().path("order.id");
         ValidatableResponse response = orderClient.acceptOrderWithoutCourierId(orderId);
         int statusCode = response.extract().statusCode();
-        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
+        assertEquals("Status code is incorrect", SC_BAD_REQUEST, statusCode);
 
         String errorMessage = response.extract().path("message");
         assertEquals("Message is incorrect", ERROR_MESSAGE_NOT_ENOUGH_DATA, errorMessage);
@@ -111,7 +111,7 @@ public class OrderAcceptTest {
         courierId = courierClient.loginCourier(courier.returnCourierLoginAndPassword()).extract().path("id");
         ValidatableResponse response = orderClient.acceptOrderWithoutOrderId(courierId);
         int statusCode = response.extract().statusCode();
-        assertEquals("Status code is incorrect", SC_NOT_FOUND, statusCode);
+        assertEquals("Status code is incorrect", SC_BAD_REQUEST, statusCode);
 
         String errorMessage = response.extract().path("message");
         assertEquals("Message is incorrect", ERROR_MESSAGE_NOT_ENOUGH_DATA, errorMessage);
